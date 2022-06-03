@@ -13,8 +13,9 @@ contract CarrotNFT is ERC721, Ownable, ERC721URIStorage {
 
     }
     event minted(uint256 indexed tokenId,string tokenURI);
+    event URIChanged(string _baseURI);
     
-    function batchTransfer(address[] memory receivers, uint256[] memory _tokenId) public {
+    function batchTransfer(address[] memory receivers, uint256[] memory _tokenId) external {
         require(msg.sender == gnosisSafe, "Transaction not initiated by safe wallet");
         require(receivers.length == _tokenId.length, 'receivers and ids dont match!');
         for(uint256 i = 0; i < receivers.length; i ++)
@@ -22,7 +23,7 @@ contract CarrotNFT is ERC721, Ownable, ERC721URIStorage {
             _transfer(msg.sender, receivers[i], _tokenId[i]);
         }
     }
-    function batchMint(uint256 amount) public  {
+    function batchMint(uint256 amount) external  {
         require(msg.sender == gnosisSafe, "Transaction not initiated by safe wallet");
         for(uint256 i = 0;i < amount ; i++){
             _mint(msg.sender, currentId);
@@ -31,8 +32,10 @@ contract CarrotNFT is ERC721, Ownable, ERC721URIStorage {
             
         }
     }
-    function setBaseURI(string memory newBaseURI) public onlyOwner {
+    function setBaseURI(string memory newBaseURI) external {
+        require(msg.sender == gnosisSafe, "Transaction not initiated by safe wallet");
         baseURI = newBaseURI;
+        emit URIChanged(newBaseURI);
     }
 
     function _baseURI() internal view override returns (string memory) {
