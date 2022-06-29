@@ -45,16 +45,14 @@ async function token() {
   );
 }
 
-async function nft() {
-  const carrotNFT = await hre.ethers.getContractFactory("CarrotNFT");
-  const carrotnft = await carrotNFT.deploy("Carrot NFT", "CNFT");
+async function nft1155() {
+  const carrotNFT = await hre.ethers.getContractFactory("CarrotNFT1155");
+  const carrotnft = await carrotNFT.deploy();
   await carrotnft.deployed();
   console.log("Carrot NFT deployed at:", carrotnft.address);
   console.log(
-    "Verify at; npx hardhat verify --contract contracts/CarrotNFT.sol:CarrotNFT --network rinkeby",
-    carrotnft.address,
-    "Carrot NFT",
-    "CNFT"
+    "Verify at; npx hardhat verify --contract contracts/CarrotNFT1155.sol:CarrotNFT --network rinkeby",
+    carrotnft.address
   );
 }
 
@@ -67,9 +65,9 @@ async function nft() {
 //      process.exit(1);
 //    });
 
- nft()
-   .then(() => process.exit(0))
-   .catch((error) => {
-     console.error(error);
-     process.exit(1);
-   });
+nft1155()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });

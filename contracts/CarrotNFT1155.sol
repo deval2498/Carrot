@@ -6,8 +6,13 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract CarrotNFT1155 is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
+    using Strings for uint256;
+
+    string public name = "CarrotNFT";
+    string public symbol = "CNFT";
     address private gnosisSafe = 0xd25A2363443bB9F3A830Ad525C13E75D52028d49;
     constructor() ERC1155("") {}
 
@@ -46,5 +51,12 @@ contract CarrotNFT1155 is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Su
         override(ERC1155, ERC1155Supply)
     {
         super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
+    }
+
+    function uri(uint256 tokenId) public view returns (string memory) {
+        require(exists(tokenId), "ERC1155Metadata: URI query for nonexistent token");
+
+        string memory baseURI = _uri;
+        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : "";
     }
 }
