@@ -13,12 +13,15 @@ contract CarrotNFT1155 is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Su
 
     string public name = "CarrotNFT";
     string public symbol = "CNFT";
-    address private gnosisSafe = 0xd25A2363443bB9F3A830Ad525C13E75D52028d49;
+    address private gnosisSafe = 0x9608172448f070AbdFBA66a988441a2E0f2ee94D;
+
+    event baseURIUpdated(string value);
     constructor() ERC1155("") {}
 
     function setURI(string memory newuri) public {
         require(msg.sender == gnosisSafe, "Transaction not initiated by safe wallet");
         _setURI(newuri);
+        emit baseURIUpdated(newuri);
     }
 
     function pause() public {

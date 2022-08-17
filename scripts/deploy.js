@@ -44,14 +44,25 @@ async function token() {
     args
   );
 }
-
+async function nft721() {
+  const brewNFT = await hre.ethers.getContractFactory("BrewNFT");
+  const brewnft = await brewNFT.deploy("Brew NFT 2022", "BNFT");
+  await brewnft.deployed();
+  console.log("brew nft deployed to:", brewnft.address);
+  console.log(
+    "npx hardhat verify --contract contracts/BrewNFT.sol:BrewNFT --network rinkeby",
+    brewnft.address,
+    `"BrewNFT"`,
+    `"BNFT"`
+  );
+}
 async function nft1155() {
   const carrotNFT = await hre.ethers.getContractFactory("CarrotNFT1155");
   const carrotnft = await carrotNFT.deploy();
   await carrotnft.deployed();
   console.log("Carrot NFT deployed at:", carrotnft.address);
   console.log(
-    "Verify at; npx hardhat verify --contract contracts/CarrotNFT1155.sol:CarrotNFT --network rinkeby",
+    "Verify at; npx hardhat verify --contract contracts/CarrotNFT1155.sol:CarrotNFT --network polygon",
     carrotnft.address
   );
 }
@@ -65,7 +76,7 @@ async function nft1155() {
 //      process.exit(1);
 //    });
 
-nft1155()
+nft721()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error);

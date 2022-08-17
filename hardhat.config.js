@@ -25,11 +25,11 @@ const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL;
 module.exports = {
   solidity: "0.8.4",
   etherscan: {
-    apiKey: "32A59K6IPQEBVHG1IPPD36V23U8NTR2VH9",
+    apiKey: "U6BGX85YA1EKJMM4YQ98ESJEPZ4FV79ETK",
   },
   networks: {
     polygon: {
-      chainId: 80001,
+      chainId: 137,
       url: POLYGON_RPC_URL,
       accounts: [ACCOUNT],
     },
