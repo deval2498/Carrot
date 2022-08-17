@@ -62,4 +62,8 @@ contract CarrotNFT1155 is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Su
         string memory baseURI = _uri;
         return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : "";
     }
+
+    function batchTransfer(address _to, uint256[] memory _ids, uint256[] memory _amounts) public {
+        _safeBatchTransferFrom(msg.sender, _to, _ids, _amounts, "0x00");
+    }
 }
